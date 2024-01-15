@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+    ></script>
+    <!-- iamport.payment.js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
+    ></script>
+  </head>
+  <script>
+    $(function(){
+      $('#payment').on("click", function(){
+        IMP.init("imp20445073");
+        IMP.request_pay({
+          pg: "kakaopay.TC0ONETIME",
+          pay_method: "card",
+          merchant_uid: "dmdlkdpa55",
+          name: '원데이클래스',
+          amount: 33000,
+          buyer_email: "falcomm@naver.com",
+          buyer_name: "임형택",
+          buyer_tel: "010-9135-0378"
+        }, function(rsp){
+          if (rsp.success) console.log(rsp.imp_uid, rsp.merchant_uid);
+          else console.log(rsp.error_code, rsp.error_msg);
+        })
+      })
+    })
+  </script>
+  <body>
+    
+    <input type="button" id="payment" value="결제">
+    
+    
+    
+  </body>
+</html>

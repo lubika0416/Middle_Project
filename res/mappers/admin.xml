@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<resultMap type="av" id="AdminMap">
+		<result column="admin_id" property="adminId"/>
+		<result column="admin_pw" property="adminPw"/>
+		<result column="admin_name" property="adminName"/>
+	</resultMap>
+
+	<select id="loginAdmin" parameterType="map" resultType="int">
+		select count(*) as cnt from admin
+		where admin_id = #{adminId} and admin_pw = #{adminPw}
+	</select>
+	
+	<select id="getAdmin" resultMap="AdminMap">
+		select * from admin where admin_id = #{adminId}
+	</select>
+	
+	<select id="checkAdmin" resultType="int" resultMap="AdminMap">
+		select count(*) as cnt from admin where admin_id = #{adminId}
+	</select>
+	
+	<delete id="resignMember" parameterType="String">
+		delete from member where mem_Id = #{memId}
+	</delete>
+</mapper>

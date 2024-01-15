@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pcomm">
+
+
+	<resultMap type="pcommVO" id="pcommMap">
+		<result column="pcmt_no" property="pcmtNo"/>
+		<result column="pcmt_regdt" property="pcmtRegdt"/>
+		<result column="pcmt_content" property="pcmtContent"/>
+		<result column="pro_id" property="proId"/>
+		<result column="pqna_no" property="pqnaNo"/>
+	</resultMap>
+	
+	
+		<insert id="answerPQNA" parameterType="pcommVO"> 
+		<selectKey order="BEFORE" keyProperty="pcmtNo" resultType="int">
+			select pcmt_seq.nextVal from dual
+		</selectKey>
+		insert into pcomment 
+			values 
+			( #{pcmtNo},
+			sysdate, 
+			#{pcmtContent}, 
+			#{proId},
+			#{pqnaNo})
+	</insert>
+	
+	<select id="getAnswer" parameterType="pcommVO" resultMap="pcommMap">
+		select * from pcomment where pqna_no = #{pqnaNo}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

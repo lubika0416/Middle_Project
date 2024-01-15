@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+.class_modify_top{
+    margin-top: 25px;
+    /* margin-bottom: 20px; */
+    padding-left: 30px;
+    vertical-align: bottom;
+}
+
+.class_modify_top h3{
+    font-weight: bolder;
+    margin: 0;
+}
+
+.aaa{
+	background-color: black;
+	color: white;
+}
+
+.aaa:hover{
+	background-color: #00E577;
+	color: black;
+}
+
+.class_top_btn{
+    padding-right: 15px;
+    text-align: right;
+    margin-bottom: 0;
+}
+
+.btn-outline-primary {
+    color: gray;
+    border-color: gray;
+}
+
+.class_container{
+    height: auto;
+    display: flex;
+    align-content: center;
+    margin: 32px 0px;
+    padding: 24px;
+    border-bottom: 1px soild black;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ .insert_img img{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+}
+
+.class_info{
+    vertical-align: baseline;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.class_title{
+    margin-bottom: 5px;
+}
+
+.class_detail p{
+    margin-bottom: 5px;
+}
+
+.class_btns{
+    display: contents;
+}
+
+.class_btns .btn{
+    margin: 10px;
+    width: 125px;
+}
+
+.offcanvas-title{
+    margin-bottom: -10px;
+}
+
+.imgParent{
+    width: 260px;
+    height: 240px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.imgChild{
+    display: block;
+    width: 100%;
+    height: 220px;
+}
+
+
+/* type이 date인 input의 placeholder를 커스텀하기 위한 선택자 */
+/* 기본적으로 type date인 input은 placeholder가 먹히지 않기 때문이다! */
+input[type='date']::before {
+    content: attr(placeholder);
+    width: 100%;
+    height: 100%;
+    color: gray;
+}
+
+/*유효값이 입력된 경우 before에 있는 것을 사라지게 한다. 즉, placeholder를 사라지게 한다. */
+input[type='date']:valid::before {
+    display: none;
+    }
+
+
+input[type='date'] {
+    width: 150px;
+}
+
+
+form div{
+    /* border: 1px dotted red; */
+}

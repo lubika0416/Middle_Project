@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pqna">
+
+
+	<resultMap type="pqVO" id="pqMap">
+		<result column="pqna_no" property="pqnaNo"/>
+		<result column="pqna_title" property="pqnaTitle"/>
+		<result column="pqna_regdt" property="pqnaRegdt"/>
+		<result column="pqna_content" property="pqnaContent"/>
+		<result column="pro_id" property="proId"/>
+		<result column="mem_id" property="memId"/>
+		<result column="PQNA_STATUS" property="pqnaStatus"/>
+	</resultMap>
+	<!-- 
+			<select id="boardList" parameterType="map" resultType="faqv"
+		resultMap="FaqMap">
+		select A.* from
+		(select ROWNUM AS RNUM, B.* from
+		(select * from faq order by faq_no desc)B
+				<![CDATA[
+				where ROWNUM <= #{end}
+			)A
+			where A.RNUM >= #{start}
+				]]>
+	</select>
+	 -->
+		
+	
+		<insert id="insertPQNA" parameterType="pqVO"> 
+		<selectKey order="BEFORE" keyProperty="pqnaNo" resultType="int">
+			select pqna_seq.nextVal from dual
+		</selectKey>
+		insert into pqna 
+		values 
+		( #{pqnaNo},
+		#{pqnaTitle},
+		sysdate, 
+		#{pqnaContent}, 
+		#{proId},
+		#{memId},
+		0)
+	</insert>
+	
+	<select id="PQNAList" resultType="pqVO" resultMap="pqMap">
+		select * from pqna order by pqna_no desc
+	</select>
+	
+	<select id="getPQNA" parameterType="map" resultType="pqVO" resultMap="pqMap">
+		select * from pqna where pqna_no = #{pqnaNo}
+	</select>
+	
+	<select id="selectAllPQNA" resultType="pqVO" resultMap="pqMap">
+		select * from pqna where pro_id = #{proId} 
+		 order by pqna_no desc
+	</select>
+	<select id="selectAllPQNAMember" resultType="pqVO" resultMap="pqMap">
+		select * from pqna where mem_id = #{memId} 
+	</select>
+
+	
+	<update id="changeStatus" parameterType="pqVO">
+		update pqna set
+		pqna_status = #{pqnaStatus}
+		where pqna_no = #{pqnaNo}
+	</update>
+	<!-- 
+	<insert id="insertPQNA" parameterType="pqVO">
+		insert into pqna values(CLS_ID_FN(#{cateNo}), #{clsName}, #{clsPrice}, #{clsDesc}, sysdate, #{clsTime}, #{proId}, #{cateNo}, #{fileId}, #{clsMxps})
+	</insert>
+	
+	<update id="updateClasses" parameterType="cv">
+		update classes set cls_name = #{clsName}, cls_price = #{clsPrice}, cls_desc = #{clsDesc}, cls_time = #{clsTime}, cls_mxps = #{clsMxps}, file_id= #{fileId} where cls_id = #{clsId} 
+	</update>
+	
+	<delete id="deleteClasses">
+		delete from classes where cls_id = #{clsId} 
+	</delete>
+	
+	<select id="checkClasses" resultType="int">
+		select count(*) as cnt from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="getClasses" resultMap="pqVO">
+		select * from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="selectAll" resultMap="pqVO">
+		select * from classes
+	</select>
+	
+	<select id="getClassesList" resultMap="pqVO">
+		select * from classes where pro_id = #{proId}
+	</select>
+		<select id="getFileId" resultType="int">
+		select file_id from classes where cls_id = #{clsId}
+	</select>
+	 -->
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

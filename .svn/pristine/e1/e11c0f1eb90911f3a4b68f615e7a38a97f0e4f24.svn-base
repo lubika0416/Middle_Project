@@ -1,0 +1,13 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>captcha-test-01</title>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+	<form action="validation" method="POST" onsubmit="return onSubmit();">
+		<div class="g-recaptcha" data-sitekey="6LeUSv4nAAAAACs8xU6ZTB7oiwZZvDNdfdnMXX5i"></div>
+		<br/>
+    </form>
+</body>
+</html>

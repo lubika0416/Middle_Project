@@ -1,0 +1,12 @@
+.c{
+  height: 600px;
+}
+.cate_img{
+  display: inline-block;
+  width: 200px;
+  box-shadow: 10px 10px 10px 0 #0000001a;
+  
+}
+.hr-bold{
+  border: solid 5px tomato;
+}

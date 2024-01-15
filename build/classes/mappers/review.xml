@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+
+	<resultMap type="rvv" id="ReviewMap">
+		<result column="review_no" property="reviewNo"/>
+		<result column="review_regdt" property="reviewRegdt"/>
+		<result column="review_rating" property="reviewRating"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="file_id" property="fileId"/>
+		<result column="cls_id" property="clsId"/>
+		<result column="res_no" property="resNo"/>
+	</resultMap>
+	
+	<insert id="insertReview" parameterType="rvv">
+		<selectKey order="BEFORE" keyProperty="reviewNo" resultType="int">
+			select review_seq.nextVal from dual
+		</selectKey>
+		insert into review
+		values
+		( #{reviewNo},
+		sysdate,
+		#{reviewRating},
+		#{reviewContent},
+		#{fileId},
+		#{clsId},
+		#{resNo})
+	</insert>
+	
+	<update id="updateReview" parameterType="rvv">
+		update review set
+		review_rating = #{reviewRating},
+		review_content = #{reviewContent},
+		file_id = #{fileId}
+		where review_no = #{reviewNo}
+	</update>
+	
+	<delete id="deleteReview">
+		delete from review where review_No = #{reviewNo}
+	</delete>
+	
+	<select id="selectAll" resultMap="ReviewMap">
+		select * from review
+	</select>
+	
+	<select id="boardList" parameterType="map" resultType="rvv" resultMap="ReviewMap">
+		select A.* from
+			(select ROWNUM AS RNUM, B.*from
+				select * from review order by review_no desc)B
+				<![CDATA[
+					where ROWNUM <= #{end}
+				)A
+				where A.RNUM >= #{start}
+					]]>
+	</select>
+	
+	<select id="getReview" resultMap="ReviewMap">
+		select * from review where review_no = #{reviewNo}
+	</select>
+	
+	<select id="getMyReviewList" resultType="rvv" resultMap="ReviewMap">
+		select * from review where res_no in (select res_no from reservation
+    		where mem_id = #{memId})
+	</select>
+	
+	<select id="checkReview" resultType="int">
+		select count(*) as cnt from review where res_no = #{resNo}
+	</select>
+	
+	<select id="getClassRating" resultType="map" parameterType="string">
+		SELECT COALESCE(COUNT(*), 0) AS cnt, COALESCE(SUM(REVIEW_RATING) / COUNT(*), 0) AS avg FROM REVIEW WHERE CLS_ID = #{clsId}
+	</select>
+	
+	<select id="getClassReviews" resultMap="ReviewMap">
+		select * from review where cls_id = #{clsId}
+	</select>
+	
+	<select id="getMemName" parameterType="int" resultType="string">
+		select mem_name from member where mem_id = (select mem_id from reservation where res_no = (select res_no from review where review_no = #{reviewNo}))
+	</select>
+	
+	<select id="getReviewList" resultMap="ReviewMap">
+		select * from review where cls_id in (select cls_id from classes
+    		where pro_id = #{proId})
+	</select>
+	
+	<select id="getFileId" resultType="int">
+		select file_id from review where review_no = #{reviewNo}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+

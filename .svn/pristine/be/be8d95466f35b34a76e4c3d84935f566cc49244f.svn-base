@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="pay">
+	
+	
+	<resultMap type="payv" id="payMap">
+		<result column="PAY_NO" property="payNo"/>
+		<result column="PAY_DATE" property="payDate"/>
+		<result column="PAY_PRICE" property="payPrice"/>
+		<result column="PAY_FPRICE" property="finalPrice"/>
+		<result column="RES_NO" property="resNo"/>
+		<result column="COUPON_NO" property="couponNo"/>
+	</resultMap>
+	
+	<insert id="insertPay">
+		<if test="couponNo == 0">
+		insert into payment(PAY_NO, PAY_DATE, PAY_PRICE, PAY_FPRICE, RES_NO) 
+		values(pay_no_fn, sysdate, #{payPrice}, #{finalPrice}, #{resNo})
+		</if>
+		<if test="couponNo != 0">
+		insert into payment values(pay_no_fn, sysdate, #{payPrice}, #{finalPrice}, #{resNo}, #{couponNo})
+		</if>
+	</insert>
+	
+	<select id="selectAllPay" resultType="payv" resultMap="payMap">
+		select * from payment
+	</select>
+	
+	<select id="getPay" resultMap="payMap">
+		select * from payment where res_no = #{resNo}
+	</select>
+
+</mapper>

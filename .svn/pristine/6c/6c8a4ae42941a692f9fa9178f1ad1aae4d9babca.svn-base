@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+
+
+
+
+.mypage_modify_top{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    font-weight: bolder;
+}
+
+.table{
+    width: 75%;
+    display: inline-table;
+    margin-left: 10rem;
+}
+
+ .table th{
+    width: 20%;
+    vertical-align: middle;
+    font-size: large;
+    font-weight: lighter;
+}
+
+.modifyBtn{
+    margin: 3rem;
+}
+
+.cancleBtn{
+    border: none;
+    border-radius: 15px;
+    color:#fff;
+    background-color:#d9534f;
+}
+
+.cancleBtn:hover{
+    color:#fff;
+    background-color:#c9302c;
+}
+
+.confirmBtn{
+    border: none;
+    border-radius: 15px;
+    color:#fff;
+    background-color:#337ab7;
+    
+}
+
+.confirmBtn:hover{
+    color:#fff;
+    background-color:#286090;
+}
+
+/* type이 date인 input의 placeholder를 커스텀하기 위한 선택자 */
+/* 기본적으로 type date인 input은 placeholder가 먹히지 않기 때문이다! */
+input[type='date']::before {
+    content: attr(placeholder);
+    width: 100%;
+    height: 100%;
+    color: gray;
+}
+
+/*유효값이 입력된 경우 before에 있는 것을 사라지게 한다. 즉, placeholder를 사라지게 한다. */
+input[type='date']:valid::before {
+    display: none;
+    }

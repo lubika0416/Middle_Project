@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="faq">
+
+	<resultMap type="faqv" id="FaqMap">
+		<result column="faq_No" property="faqNo" />
+		<result column="faq_Title" property="faqTitle" />
+		<result column="faq_Content" property="faqContent" />
+		<result column="faq_Id" property="faqId" />
+	</resultMap>
+
+	<select id="boardList" parameterType="map" resultType="faqv"
+		resultMap="FaqMap">
+		select A.* from
+		(select ROWNUM AS RNUM, B.* from
+		(select * from faq order by faq_no desc)B
+				<![CDATA[
+				where ROWNUM <= #{end}
+			)A
+			where A.RNUM >= #{start}
+				]]>
+	</select>
+	
+	<insert id="insertFaq" parameterType="faqv"> 
+		<selectKey order="BEFORE" keyProperty="faqNo" resultType="int">
+			select faq_seq.nextVal from dual
+		</selectKey>
+		insert into faq 
+		values 
+		( #{faqNo},
+		#{faqTitle}, 
+		#{faqContent}, 
+		#{faqId})
+	</insert>
+	
+	<delete id="deleteFaq">
+		delete from faq where faq_no = #{faqNo}
+	</delete>
+	
+	<update id="updateFaq"  parameterType="faqv">
+		update faq set 
+		faq_title = #{faqTitle}, 
+		faq_content = #{faqContent}
+		where faq_no = #{faqNo}
+	</update>
+	
+	<select id="getFaq" resultType="faqv" resultMap="FaqMap" >
+		select * from faq where faq_no = #{faqNo}
+	</select>
+	
+</mapper>

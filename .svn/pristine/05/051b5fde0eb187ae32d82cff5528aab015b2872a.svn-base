@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="acmt">
+
+	<resultMap type="acVO" id="acMap">
+		<result column="acmt_no" property="acmtNo"/>
+		<result column="acmt_regdt" property="acmtRegdt"/>
+		<result column="acmt_content" property="acmtContent"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="aqna_no" property="aqnaNo"/>
+	</resultMap>
+
+	<insert id="answerAQNA" parameterType="acVO"> 
+		<selectKey order="BEFORE" keyProperty="acmtNo" resultType="String">
+			select acmt_seq.nextVal from dual
+		</selectKey>
+		insert into acomment
+		(acmt_no, acmt_regdt, acmt_content, admin_id, aqna_no)
+		values 
+		( #{acmtNo},
+		sysdate, 
+		#{acmtContent}, 
+		#{adminId},
+		#{aqnaNo})
+	</insert>
+	
+	<select id="getAnswer" parameterType="acVO" resultMap="acMap">
+		select * from acomment where aqna_no = #{aqnaNo}
+	</select>
+	
+</mapper>

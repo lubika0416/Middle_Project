@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="favorite">
+	
+	<resultMap type="fav" id="faMap">
+		<result column="CLS_ID" property="clsId"/>
+		<result column="MEM_ID" property="memId"/>
+	</resultMap>
+	
+	<insert id="addFavorite" parameterType="fav">
+		insert into favorite values (#{clsId}, #{memId})
+	</insert>
+	
+	<select id="checkFavorite" parameterType="fav" resultType="int">
+		select count(*) from favorite where cls_id = #{clsId} and mem_id = #{memId}
+	</select>
+	
+	<select id="selectFavorite" resultMap="faMap">
+		select * from favorite where mem_id= #{memId}
+	</select>
+	<select id="getFavoriteList" resultMap="faMap">
+		select * from favorite where cls_id in (select cls_id from classes
+    		where pro_id = #{proId})
+	</select>
+	
+	<delete id="removeFavorite" parameterType="fav">
+		delete from favorite where mem_id = #{memId} and cls_id = #{clsId}
+	</delete>
+	
+</mapper>

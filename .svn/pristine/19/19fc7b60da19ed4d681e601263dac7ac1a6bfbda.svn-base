@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+hr{
+    /* mb-1 mt-n2 */
+    margin-top:10px;
+    margin-bottom: 15px;
+}
+
+.box1{
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 125px;
+}
+
+.box2{
+    /* my-5 */
+    margin-top: 0;
+}
+
+.content{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.card{
+    margin-bottom: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+li.list-group-item{
+color: white;
+font-family: 'Pretendard6';
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+border: none;
+margin: 16px;
+background-color: black;
+}
+
+.list-group-item:hover{
+color: var(--CI, #00E577);
+}
+
+ul a{
+    text-decoration: none;
+}
+
+h4 span{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table{
+    text-align: center;
+}
+
+.mtablediv{
+    padding: 30px;
+}
+
+.mtable{
+    display: flex;
+    justify-content: center;
+    height: max-content;
+}
+
+.mtable tr{
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+    
+}
+
+.mtable th{
+    width: 130px;
+    vertical-align: top;
+    font-size: 17px;
+    text-align: start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.mtableList{
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.myheader {
+	background-color: black;
+	height: 348px;
+	width: 100%;
+}
+
+.myheadermargin {
+	width: 1120px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.profileimg {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	margin-right: 40px;
+}
+
+.proName {
+color: #FFF;
+font-family:'Pretendard8';
+font-size: 32px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+margin: 4px 0px;
+}
+
+.proSub {
+margin: 4px;
+color: #999;
+font-family: 'Pretendard5';
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;	
+}
+
+.rightarray {
+display: flex;
+justify-content: flex-end !important;
+}
+
+.textbbox {
+	width:120px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.listContainer {
+	width: 1120px;
+	
+}
+
+.calbox {
+	width: 650px;
+}
+.calbox3 {
+	width: 100%;
+}
+
+.mypagerow {
+	display: flex;
+	width: 100%;
+}
+
+.calbox2 {
+	width: 415px;
+	height: 720px;
+}
+
+.myheadermargin2 {
+	height:80%;
+	width: 100%;
+	display: flex; 
+	flex-direction: row; 
+	align-items: center; 
+	justify-content: space-between;
+}
+
+.mypagimargin {
+	margin: 40px 0px; 
+	min-height: 80vh;
+	width: 100%;
+	display: flex;
+    justify-content: space-between;
+}
+
+.mycontenttitle {
+color: #000;
+font-family: 'Pretendard7';
+font-size: 32px;
+font-style: normal;
+line-height: normal;
+font-weight: 700;
+margin-bottom: 32px;
+}
+
+.mycontentbar {
+width: 650px;
+height: 4px;
+border:0;
+flex-shrink: 0;
+color: #000 !important;
+background-color: #000 !important;
+background: #000 ;
+margin-top: 16px;
+margin-bottom: 0px !important;
+	
+}
+.mycontentbar2 {
+width: 100%;
+height: 4px;
+border:0;
+flex-shrink: 0;
+color: #000 !important;
+background-color: #000 !important;
+background: #000 ;
+margin-top: 16px;
+margin-bottom: 0px !important;
+	
+}
+
+.tbTitle{
+	vertical-align: middle !important;  
+	font-size: large;
+}
+.tbTitle2{
+	vertical-align: middle !important;  
+	font-size: medium;
+}

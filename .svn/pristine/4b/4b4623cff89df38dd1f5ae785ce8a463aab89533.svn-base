@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="report">
+	
+	<resultMap type="rpv" id="rpMap">
+		<result column="report_no" property="reportNo"/>
+		<result column="report_reason" property="reportReason"/>
+		<result column="report_result" property="reportResult"/>
+		<result column="mem_id" property="memId"/>
+		<result column="report_date" property="reportDate"/>
+	</resultMap>
+
+	<select id="selectAllReport" resultMap="rpMap">
+		select * from report
+	</select>
+	
+	<select id="getReport" parameterType="String" resultMap="rpMap">
+		select * from report where report_no = #{reportNo}
+	</select>
+	
+	<delete id="deleteReport">
+		delete from report where report_no = #{reportNo}
+	</delete>
+
+</mapper>

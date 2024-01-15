@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="producer">
+
+<!-- 
+	이 영역에 sql문에 맞는 태그를 사용하여 sql문을 기술한다
+	
+	사용할 수 있는 기본적인 태그들
+	<select> ~~ </select>
+	<insert> ~~ </insert>
+	<update> ~~ </update>
+	<delete> ~~ </delete>
+	
+	위 태그에서 사용되는 속성들
+	1) id : 해당 태그를 호출할 대 namespace와 연결하여 사용하는 이름
+	2) parameterType : SQL문에 사용될 데이터가 들어있는 객체타입을 지정한다
+					   (보통 VO 쿨래스, 자바의 자료형이름 등이 사용된다)
+					   (typeAlias로 지정한 alias명을 사용할 수 있다)
+	3) resultType : select문을 실행한 결과를 담을 객체타입을 지정한다
+					(보통 VO클래스나 자바의 자료형 이름을 사용한다)					   
+	4) resultMap : 결과 레코드 컬럼명과 VO객체의 property명이 다를경우 적절한 매핑을 위해 사용한다
+ -->
+	<resultMap type="pv" id="ProducerMap">
+		<result column="pro_id" property="proId"/>
+		<result column="pro_pw" property="proPw"/>
+		<result column="pro_name" property="proName"/>
+		<result column="pro_email" property="proEmail"/>
+		<result column="pro_tel" property="proTel"/>
+		<result column="pro_store" property="proStore"/>
+		<result column="pro_addr" property="proAddr"/>
+		<result column="pro_strtel" property="proStrTel"/>
+		<result column="pro_regno" property="proRegNo"/>
+		<result column="pro_regdt" property="proRegdt"/>
+		<result column="pro_desc" property="proDesc"/>
+		<result column="pro_pro" property="proPro"/>
+		<result column="file_id" property="fileId"/>
+	</resultMap>
+
+	<insert id="SignUpProducer" parameterType="pv">
+		insert into producer(pro_id, pro_pw, pro_name, pro_email, pro_tel,
+							 pro_store, pro_addr, pro_strtel,
+							pro_regno, pro_regdt, pro_desc, pro_pro, file_id)
+		values(#{proId}, #{proPw}, #{proName}, #{proEmail}, #{proTel}, #{proStore},
+			   #{proAddr}, #{proStrTel}, #{proRegNo}, sysdate, #{proDesc}, #{proPro},
+			   #{fileId})	
+	</insert>
+	
+	<select id="loginProducer" parameterType="map" resultType="int">
+		select count(*) as cnt from producer
+		  where pro_id = #{proId} and pro_pw = #{proPw}	
+	</select>
+	
+	<select id="checkProducer" resultType="int">
+		select count(*) as cnt from producer
+		  where pro_id = #{proId}
+	</select>
+	
+	<select id="getProducer" resultMap="ProducerMap" resultType="pv">
+		select * from producer where pro_id = #{proId}
+	</select>
+	
+	<select id="findId" parameterType="map" resultMap="ProducerMap">	
+		select * from producer where pro_name = #{name} and pro_email = #{mail}
+	</select>
+	
+	<select id="findPw" parameterType="map" resultMap="ProducerMap">
+		select * from producer where pro_name = #{name} and pro_email = #{mail} and pro_id = #{id}
+	</select>
+	
+	<update id="updatePw" parameterType="map">
+		update producer set pro_pw = #{tempPw} where pro_id = #{proId}
+	</update>
+	
+	<update id="updateProducer" parameterType="pv">
+		UPDATE producer
+		SET pro_name = #{proName}, pro_pw = #{proPw}, pro_tel = #{proTel},
+			 pro_strtel = #{proStrTel}, pro_regno = #{proRegNo}, pro_email = #{proEmail},
+			 pro_store = #{proStore}, pro_addr = #{proAddr}, pro_desc = #{proDesc},
+			 pro_pro = #{proPro}, file_id = #{fileId} 
+		 WHERE pro_id = #{proId}
+	</update>
+	
+	<select id="getFileId" resultType="int">
+		select file_id from producer where pro_id = #{proId}
+	</select>
+	
+	<select id="selectAll" resultType="pv" resultMap="ProducerMap">
+		select * from producer
+	</select>
+	
+	<select id="getClsPro" resultMap="ProducerMap">
+		select * from producer where pro_id = (select pro_id from classes where cls_id = #{clsId})
+	</select>
+	
+	<select id="getUsedInfo" resultType="map">
+		<!-- SELECT
+		    (SELECT COUNT(*) FROM CLASSES WHERE PRO_ID = #{proId}) AS CLSCNT,
+		    (SELECT COUNT(*) FROM REVIEW R WHERE R.CLS_ID IN (SELECT CLS_ID FROM CLASSES WHERE PRO_ID = #{proId})) AS REVCNT,
+		    (select count(*) from favorite where cls_id = (select cls_id from classes where pro_id = #{proId})) AS FAVCNT
+		FROM DUAL -->
+		
+		SELECT 
+		    COUNT(DISTINCT C.CLS_ID) AS CLSCNT,
+		    COUNT(DISTINCT R.REVIEW_NO) AS REVCNT,
+		    COUNT(DISTINCT F.CLS_ID) AS FAVCNT
+		FROM CLASSES C
+		LEFT JOIN REVIEW R ON C.CLS_ID = R.CLS_ID
+		LEFT JOIN FAVORITE F ON C.CLS_ID = F.CLS_ID
+		WHERE C.PRO_ID = #{proId}
+		
+	</select>
+	
+<!--  
+
+
+	<delete id="deleteMember" parameterType="String">
+		delete
+		from mymember
+		where mem_id = #{memId}
+	</delete>
+
+	<select id="selectAll" resultType="mvo">
+		select mem_id as memId,
+		mem_name as memName, mem_tel as memTel, mem_addr as memAddr, reg_dt as
+		regDt, atch_file_id as atchFileId
+		from mymember
+	</select>
+
+	<select id="getMember" resultType="mvo">
+		select mem_id as memId,
+		mem_name as memName, mem_tel as memTel, mem_addr as memAddr, atch_file_id as atchFileId
+		from
+		mymember
+		where mem_id = #{memId}
+	</select>
+
+	<select id="checkMember" parameterType="String" resultType="int">
+		select count(*) as cnt from mymember where mem_id = #{memId}
+	</select>
+
+	<select id="searchMember" resultMap="mm">
+		select * from mymember
+		where 1 = 1
+		<if test="memId != null and memId != '' ">
+			and mem_id = #{memId}
+		</if>
+		<if test="memName != null and memName != '' ">
+			and mem_name = #{memName}
+		</if>
+		<if test="memTel != null and memTel != '' ">
+			and mem_tel = #{memTel}
+		</if>
+		<if test="memAddr != null and memAddr != '' ">
+			and mem_addr like '%' || #{memAddr} || '%'
+		</if>
+
+
+
+	</select>
+	-->
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

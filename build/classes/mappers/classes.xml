@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cls">
+
+
+	<resultMap type="cv" id="clsMap">
+		<result column="cls_id" property="clsId"/>
+		<result column="cls_name" property="clsName"/>
+		<result column="cls_price" property="clsPrice"/>
+		<result column="cls_desc" property="clsDesc"/>
+		<result column="cls_regdt" property="clsRegDt"/>
+		<result column="cls_time" property="clsTime"/>
+		<result column="pro_id" property="proId"/>
+		<result column="cate_no" property="cateNo"/>
+		<result column="file_id" property="fileId"/>
+		<result column="cls_mxps" property="clsMxps"/>
+	</resultMap>
+
+	<insert id="createClasses" parameterType="cv">
+		insert into classes values(CLS_ID_FN(#{cateNo}), #{clsName}, #{clsPrice}, #{clsDesc}, sysdate, #{clsTime}, #{proId}, #{cateNo}, #{fileId}, #{clsMxps})
+	</insert>
+	
+	<update id="updateClasses" parameterType="cv">
+		update classes set cls_name = #{clsName}, cls_price = #{clsPrice}, cls_desc = #{clsDesc}, cls_time = #{clsTime}, cls_mxps = #{clsMxps}, file_id= #{fileId} where cls_id = #{clsId} 
+	</update>
+	
+	<delete id="deleteClasses">
+		delete from classes where cls_id = #{clsId} 
+	</delete>
+	
+	<select id="checkClasses" resultType="int">
+		select count(*) as cnt from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="getClasses" resultMap="clsMap">
+		select * from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="selectAll" resultMap="clsMap">
+		select * from classes
+	</select>
+	
+	<select id="getClassesList" resultMap="clsMap">
+		select * from classes where pro_id = #{proId}
+	</select>
+		<select id="getFileId" resultType="int">
+		select file_id from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="getProId" resultMap="clsMap" resultType="cv">
+		select * from classes where cls_id = #{clsId}
+	</select>
+	
+	<select id="getClassList" resultMap="clsMap" resultType="cv">
+		select * from classes
+		where instr(cls_name, #{clsName}) > 0
+	</select>
+	
+	<select id="selectCraftCate" resultMap="clsMap">
+		select * from classes where cate_no = 1
+	</select>
+	
+	<select id="selectCookCate" resultMap="clsMap">
+		select * from classes where cate_no = 2
+	</select>
+	
+	<select id="selectArtCate" resultMap="clsMap">
+		select * from classes where cate_no = 3
+	</select>
+	
+	<select id="selectFlowerCate" resultMap="clsMap"> 
+		select * from classes where cate_no = 4
+	</select>
+	
+	<select id="selectBeautyCate" resultMap="clsMap">
+		select * from classes where cate_no = 5
+	</select>
+	
+	<select id="selectActivityCate" resultMap="clsMap">
+		select * from classes where cate_no = 6
+	</select>
+	
+	<select id="descClassList" resultMap="clsMap">
+		SELECT *
+		FROM classes
+		ORDER BY (SELECT COUNT(*) FROM review WHERE review.CLS_ID = classes.CLS_ID) DESC
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visit">
+
+<!-- 	<resultMap type="rvv" id="ReviewMap"> -->
+<!-- 		<result column="v_date" property="vDate"/> -->
+<!-- 	</resultMap> -->
+	
+	<insert id="setTotalCount">
+		INSERT INTO VISIT(V_DATE) VALUES ( TO_DATE( sysdate ,'YY-MM-DD') )
+	</insert>
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) AS TotalCnt FROM VISIT
+	</select>
+	
+	<select id="getTodayCount" resultType="int">
+		SELECT COUNT(*) AS TodayCnt FROM VISIT
+		WHERE TO_DATE(V_DATE, 'YYYY-MM-DD') = TO_DATE( sysdate, 'YY-MM-DD' )
+	</select>
+	
+	<select id="selectAllVisit" resultType="Date">
+		SELECT * FROM VISIT
+	</select>
+</mapper>

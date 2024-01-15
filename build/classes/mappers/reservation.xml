@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="res">
+	
+	<resultMap type="rv" id="resMap">
+		<result column="res_no" property="resNo"/>
+		<result column="res_pcnt" property="resCnt"/>
+		<result column="res_regdt" property="resRegdt"/>
+		<result column="css_id" property="cssId"/>
+		<result column="mem_id" property="memId"/>
+	</resultMap>
+	
+	
+	
+	<insert id="insertReservation" parameterType="rv">
+		insert into reservation values (res_no_fn, #{resCnt}, sysdate, #{cssId}, #{memId} )
+	</insert>
+	
+	<select id="selectMyReservation" resultType="rv" resultMap="resMap">
+		select * from reservation where mem_id = #{memId} 
+		 
+	</select>
+	
+	<select id="getReservationNo" parameterType="map" resultType="int">
+		select res_no from reservation where mem_id = #{memId} and css_id = #{cssId}
+	</select>
+	
+	<select id="getResList" resultMap="resMap">
+		SELECT r.*
+		FROM RESERVATION r
+		JOIN CLASSSCHEDULE cs ON r.CSS_ID = cs.CSS_ID
+		JOIN CLASSES c ON cs.CLS_ID = c.CLS_ID
+		WHERE c.PRO_ID = #{proId}
+	</select>
+	
+	<select id="getReservation" resultMap="resMap">
+		select * from reservation where res_no = #{resNo}	
+	</select>
+	
+	<select id="getClassName" resultType="string">
+		select cls_name from classes where cls_id = #{clsId}
+	</select>
+	
+	<delete id="deleteReservation">
+		delete from reservation where res_no = #{resNo}
+	</delete>
+	
+</mapper>

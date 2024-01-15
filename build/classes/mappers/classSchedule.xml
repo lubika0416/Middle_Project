@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedule">
+	
+	<resultMap type="csv" id="scdMap">
+		<result column="CSS_ID" property="cssId"/>
+		<result column="CSS_DATE" property="cssDate"/>
+		<result column="CSS_STM" property="startTime"/>
+		<result column="CSS_ETM" property="endTime"/>
+		<result column="CSS_MXPS" property="maxPerson"/>
+		<result column="CSS_CPS" property="currentPerson"/>
+		<result column="CLS_ID" property="clsId"/>
+	</resultMap>
+	
+	<insert id="insertSchedule" parameterType="csv">
+		insert into classschedule values (CSS_ID_FN(#{clsId}), #{cssDate}, #{startTime}, #{maxPerson}, #{currentPerson}, #{clsId}, #{endTime})
+	</insert>
+	
+	<select id="getClsScd" resultMap="scdMap">
+		select * from classschedule where cls_id = #{clsId}
+	</select>
+	
+	<select id="getScdDate" resultType="date">
+		select DISTINCT css_date from classschedule where cls_id = #{clsId} 
+	</select>
+	
+	<update id="updateCnt" parameterType="map">
+		update classschedule set css_cps = (css_cps + #{resCnt}) where css_id = #{cssId}
+	</update>
+	
+	<select id="getSchedule" resultMap="scdMap">
+		select * from classschedule where css_id = #{cssId}
+	</select>
+	
+</mapper>

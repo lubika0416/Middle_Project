@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="file">
+
+	<resultMap type="fv" id="fileMap">
+		<result column="file_id" property="fileId"/>
+		<result column="file_regdt" property="fileRegdt"/>
+		<result column="file_used" property="useAt"/>
+		<result column="fdetail_sn" property="fileSn"/>
+		<result column="fdetail_path" property="filePath"/>
+		<result column="fdetail_svnm" property="fileSvNm"/>
+		<result column="fdetail_ornm" property="fileOrNm"/>
+		<result column="fdetail_extsn" property="fileExtsn"/>
+		<result column="fdetail_cn" property="fileCn"/>
+		<result column="fdetail_size" property="fileSize"/>
+	</resultMap>
+
+
+	<insert id="insertFile" parameterType="fv">
+		<selectKey order="BEFORE" keyProperty="fileId" resultType="int">
+			select file_seq.nextVal from dual
+		</selectKey>
+		insert into files (file_id, file_regdt, file_used) values(#{fileId}, sysdate, 'Y')
+	</insert>
+	
+	<insert id="insertDetailFile">
+		insert into file_detail (file_id, fdetail_sn, fdetail_path, fdetail_svnm, fdetail_ornm, fdetail_extsn, fdetail_cn, fdetail_size) 
+		values (#{fileId}, (select nvl(max(fdetail_sn),0) + 1 from file_detail where file_id = #{fileId}) , 
+		#{filePath}, #{fileSvNm} , #{fileOrNm}, #{fileExtsn}, #{fileCn}, #{fileSize})
+	</insert>
+	
+	<select id="getFileList" parameterType="fv" resultMap="fileMap">
+		select * from file_detail where file_id = #{fileId}
+	</select>
+	
+	<select id="getFileDetail" parameterType="fv" resultMap="fileMap">
+		select * from file_detail where  file_id = #{fileId} and  fdetail_sn = #{fileSn}
+	</select>
+	
+	<select id="getProFileList" resultMap="fileMap">
+		select * from file_detail where file_id = (select file_id from producer where pro_id= #{proId})
+	</select>
+	
+	
+	<select id="getClassFileList" resultMap="fileMap">
+		select * from file_detail where file_id = (select file_id from classes where cls_id = #{proId})
+	</select>
+	<select id="getSearchClassFileList" resultMap="fileMap">
+		select * from file_detail where file_id = (select file_id from classes where cls_name = #{clsName})
+	</select>
+	
+	<select id="getFeedFileList" resultMap="fileMap">
+		select * from file_detail where file_id = (select file_id from feed where feed_no = #{feedNo})
+	</select>
+
+	<select id="getFiles" resultMap="fileMap">
+		
+		select * from file_detail where file_id = #{fildId}
+	</select>
+
+</mapper>

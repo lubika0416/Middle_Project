@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+
+	<resultMap type="nv" id="NoticeMap">
+		<result column="notice_no" property="noticeNo"/>
+		<result column="notice_regdt" property="noticeRegdt"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="admin_id" property="adminId"/>
+		<result column="file_id" property="fileId"/>
+	</resultMap>
+
+	<insert id="insertNotice" parameterType="nv"> 
+		<selectKey order="BEFORE" keyProperty="noticeNo" resultType="int">
+			select notice_seq.nextVal from dual
+		</selectKey>
+		insert into notice 
+		values 
+		( #{noticeNo},
+		sysdate, 
+		#{noticeTitle}, 
+		#{noticeContent}, 
+		#{adminId},
+		#{fileId})
+	</insert>
+	
+	<update id="updateNotice"  parameterType="nv">
+		update notice set 
+		notice_title = #{noticeTitle}, 
+		notice_content = #{noticeContent}
+		where notice_no = #{noticeNo}
+	</update>
+	
+	<delete id="deleteNotice">
+		delete from notice where notice_no = #{noticeNo}
+	</delete>
+
+	<select id="countList" resultType="int">
+		SELECT COUNT(*) FROM notice
+	</select>
+
+	<select id="boardList" parameterType="map" resultType="nv" resultMap="NoticeMap">
+		select A.* from
+			(select ROWNUM AS RNUM, B.* from
+				(select * from notice order by notice_no desc)B
+				<![CDATA[
+				where ROWNUM <= #{end}
+			)A
+			where A.RNUM >= #{start}
+				]]>
+	</select>
+	
+	<select id="getNotice" resultType="nv" resultMap="NoticeMap" >
+		select * from notice where notice_no = #{noticeNo}
+	</select>
+
+</mapper>

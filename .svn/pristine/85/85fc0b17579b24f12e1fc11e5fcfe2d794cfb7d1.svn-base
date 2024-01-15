@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+.storeTop{
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px;
+    display: flex;
+    border-radius: 10px;
+    background-color: #d3d3d33a;
+}
+
+.top-imgParent{
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* margin-right: 20px; */
+}
+
+.img-top{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.storeTopContent{
+    width: 100%;
+    padding: 100px 50px;
+}
+
+.storeTitle{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+li{
+    list-style: none;
+}
+
+#menubar{
+    width: 100%;
+    background-color: lightgrey;
+    border-top: 3px solid #b3b3b3a2;
+}
+
+#menubar ul{
+    width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#menubar ul li{
+    float: left;
+    width: 50%;
+    height: 100%;
+    line-height: 50px;
+    font-size: 18px;
+    text-align: center;
+    background-color: lightgrey;
+}
+#menubar ul li:hover, button:hover{
+    background-color: grey;
+    color: #fff;
+}
+
+#menubar .menuLi .menuBtn{
+    width: 233px;
+    background-color: lightgrey;
+    border: none;
+}
+
+#menubar .menuBtn:hover{
+    background-color: grey;
+    color: #fff;
+}
+#menubar .menuBtn:focus{
+    background-color: grey;
+    color: #fff;
+}
+
+#storeContent{
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.realContent_feed{
+    width: 1130px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgParent{
+    width: 260px;
+    height: 260px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-img-top{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.card a{
+    text-decoration: none;
+    color: black;
+}
+
+.card-store{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 5px;
+	
+}
+
+.realContentclass{
+    width: 1120px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#floating-map-button {
+    position: fixed;
+    display: flex;
+    padding: 14px 19px;
+    align-items:center;
+    left: 80%; /*부모의 50%*/
+    bottom: 125px;
+    background-color: white;
+    background-color: rgba( 255, 255, 255, 0.5 );
+    border-radius: 24px;
+    border-color: #00E577;
+    transform: translateX(-50%);
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    gap: 8px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+#floating-map-button:hover {
+    /* transform: translateX(-50%) scale(1.04); */
+
+    background-color: #00E577;
+    border: none;
+    /* color: white; */
+}
+
+#questionTitle{
+	margin-bottom: 15px;
+}
+
+
+.wrapper{
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 125px;
+}

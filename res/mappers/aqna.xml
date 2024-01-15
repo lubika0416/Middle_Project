@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aqna">
+
+	<resultMap type="aqVO" id="aqMap">
+		<result column="aqna_no" property="aqnaNo"/>
+		<result column="aqna_title" property="aqnaTitle"/>
+		<result column="aqna_content" property="aqnaContent"/>
+		<result column="aqna_regdt" property="aqnaRegdt"/>
+		<result column="mem_id" property="memId"/>
+		<result column="pro_id" property="proId"/>
+		<result column="aqna_status" property="aqnaStatus"/>
+	</resultMap>
+	
+	<insert id="insertAQNA" parameterType="aqVO">
+	<selectKey order="BEFORE" keyProperty="aqnaNo" resultType="string">
+		select aqna_seq.nextVal as aqnaNo from dual
+	</selectKey>
+	insert into aqna 
+		values 
+		( #{aqnaNo},
+		#{aqnaTitle},
+		#{aqnaContent}, 
+		sysdate, 
+		#{memId},
+		null,
+		0)
+	</insert>
+	
+	
+	<insert id="insertProAQNA" parameterType="aqVO">
+	<selectKey order="BEFORE" keyProperty="aqnaNo" resultType="string">
+		select aqna_seq.nextVal as aqnaNo from dual
+	</selectKey>
+	insert into aqna 
+		values 
+		( #{aqnaNo},
+		#{aqnaTitle},
+		#{aqnaContent}, 
+		sysdate, 
+		null,
+		#{proId},
+		0)
+	</insert>
+	
+	<select id="selectAllQna" resultType="aqVO" resultMap="aqMap">
+		select * from aqna order by aqna_no desc
+	</select>
+	
+	<select id="getQna" resultType="aqVO" resultMap="aqMap" parameterType="String">
+		select * from aqna where aqna_no = #{aqnaNo}
+	</select>
+	<select id="selectAllAQNAMember" resultType="aqVO" resultMap="aqMap">
+		select * from aqna where mem_id = #{memId} 
+	</select>
+		
+	<update id="changeStatus" parameterType="aqVO">
+		update aqna set
+		aqna_status = #{aqnaStatus}
+		where aqna_no = #{aqnaNo}
+	</update>
+	
+</mapper>
